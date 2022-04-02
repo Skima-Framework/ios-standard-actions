@@ -11,7 +11,7 @@ struct NavigationActionData: ActionDataType {
     let type: String?
     let value: String?
     
-    func execute(from scope: Scope?) {
+    func execute(from scopes: [Scope]?) {
         
         switch type {
         case "deeplink":

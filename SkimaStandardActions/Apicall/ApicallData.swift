@@ -13,7 +13,7 @@ struct ApiCallActionData: ActionDataType {
     let endpoint: String?
     let body: [String]?
     
-    func execute(from scope: Scope?) {
+    func execute(from scopes: [Scope]?) {
         guard let _method = method,
               let _endpoint = endpoint
         else { return }
@@ -21,13 +21,13 @@ struct ApiCallActionData: ActionDataType {
         var params: Parameters = [:]
         
         body?.forEach { param in
-            if let data = DataEngine.shared.getValue(of: param, from: scope) {
+            if let data = DataEngine.shared.getValue(of: param, from: scopes) {
                 params[param] = data
             }
         }
         
         AF.request(_endpoint, method: mapMethod(from: _method), parameters: params, encoding: JSONEncoding.default).responseDecodable(of: ApicallResponse.self) { response in
-            response.value?.actions?.execute(from: scope)
+            response.value?.actions?.execute(from: scopes)
         }
     }
     

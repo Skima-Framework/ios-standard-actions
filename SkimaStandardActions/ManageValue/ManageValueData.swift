@@ -13,7 +13,7 @@ struct ManageValueActionData: ActionDataType {
     let dataType: String?
     let value: String?
     
-    func execute(from scope: Scope?) {
+    func execute(from scopes: [Scope]?) {
         
         switch type {
         case "createOrModify":
@@ -21,22 +21,22 @@ struct ManageValueActionData: ActionDataType {
                   let _dataType = dataType,
                   let _value = value
             else { return }
-            DataEngine.shared.createOrModify(VariableModel(id: _id, scope: scope, type: _dataType, value: _value), from: scope)
+            DataEngine.shared.createOrModify(VariableModel(id: _id, scopes: scopes, type: _dataType, value: _value), from: scopes)
         case "createIfNotExists":
             guard let _id = id,
                   let _dataType = dataType,
                   let _value = value
             else { return }
-            DataEngine.shared.createIfNotExists(VariableModel(id: _id, scope: scope, type: _dataType, value: _value), from: scope)
+            DataEngine.shared.createIfNotExists(VariableModel(id: _id, scopes: scopes, type: _dataType, value: _value), from: scopes)
         case "modifyIfExists":
             guard let _id = id,
                   let _dataType = dataType,
                   let _value = value
             else { return }
-            DataEngine.shared.modifyIfExists(VariableModel(id: _id, scope: scope, type: _dataType, value: _value), from: scope)
+            DataEngine.shared.modifyIfExists(VariableModel(id: _id, scopes: scopes, type: _dataType, value: _value), from: scopes)
         case "remove":
             guard let _id = id else { return }
-            DataEngine.shared.remove(_id, from: scope)
+            DataEngine.shared.remove(_id, from: scopes)
         default:
             return
         }
